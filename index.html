@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Tempo CNC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #282c36;
+            color: #ffffff;
+        }
+        .container {
+            background: #3a3f4b;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Tempo Restante - CNC</h2>
+        <label for="totalLinhas">N° Total de Linhas do Programa:</label>
+        <input type="number" id="totalLinhas" placeholder="Ex: 380000"><br>
+        
+        <label for="linhaAtual">N° Linha Atual em Execução:</label>
+        <input type="number" id="linhaAtual" placeholder="Ex: 50000"><br>
+        
+        <button onclick="calcularTempo()">Calcular Tempo Restante</button>
+        
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        function calcularTempo() {
+            let totalLinhas = parseInt(document.getElementById("totalLinhas").value);
+            let linhaAtual = parseInt(document.getElementById("linhaAtual").value);
+
+            if (isNaN(totalLinhas) || isNaN(linhaAtual) || linhaAtual > totalLinhas) {
+                document.getElementById("resultado").innerText = "Por favor, insira valores válidos.";
+                return;
+            }
+
+            let linhasPorHora = 10000;
+            let linhasRestantes = totalLinhas - linhaAtual;
+            let horasRestantes = Math.floor(linhasRestantes / linhasPorHora);
+            let minutosRestantes = Math.floor((linhasRestantes % linhasPorHora) * 60 / linhasPorHora);
+
+            document.getElementById("resultado").innerText = `Tempo restante: ${horasRestantes} horas e ${minutosRestantes} minutos.`;
+        }
+    </script>
+</body>
+</html>
